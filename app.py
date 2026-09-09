@@ -1,12 +1,11 @@
 import streamlit as st
 import requests
-import json
 
 st.set_page_config(page_title="Creator Niche & Topic Finder", page_icon="🎬")
 st.title("🎬 Creator Niche & Daily Topic Finder")
 st.write("2026-2027 ki top categories aur daily viral content ideas bilkul free me khojein.")
 
-# Direct API Key embed
+# Direct Key embed
 GEMINI_API_KEY = "AQ.Ab8RN6Kb-F0YKcn0Rm0BOaIY8QdBhNqKKS1VkIqsQDLZDxAsWw"
 
 user_topic = st.text_input("Apna Topic / Niche likhein (e.g., AI Tools, Indian History, Tech Reviews):")
@@ -25,9 +24,12 @@ if st.button("Analyze & Generate Ideas"):
             4. **Monetization Ideas**: Sponsorships, Digital Products, AdSense.
             """
             
-            # Direct REST API endpoint
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={GEMINI_API_KEY}"
-            headers = {'Content-Type': 'application/json'}
+            # Updated Endpoint & Authorization Header
+            url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+            headers = {
+                'Content-Type': 'application/json',
+                'Authorization': f'Bearer {GEMINI_API_KEY}'
+            }
             payload = {
                 "contents": [{
                     "parts": [{"text": prompt_text}]
@@ -36,6 +38,12 @@ if st.button("Analyze & Generate Ideas"):
             
             try:
                 res = requests.post(url, headers=headers, json=payload)
+                
+                # Fallback if bearer token requires standard key parameter
+                if res.status_code == 401:
+                    alt_url = f"{url}?key={GEMINI_API_KEY}"
+                    res = requests.post(alt_url, json=payload)
+                
                 data = res.json()
                 
                 if res.status_code == 200:
