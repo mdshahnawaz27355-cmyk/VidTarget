@@ -6,7 +6,7 @@ st.title("🎬 Creator Niche & Daily Topic Finder")
 st.write("2026-2027 ki top categories aur daily viral content ideas bilkul free me khojein.")
 
 # Direct API Key embed (AQ.Ab8RN6L1qnCp6l3sAoIsvvj4k0o-TSe72gf1nLen7lSTvkoH0Q)
-GEMINI_API_KEY = "YAHAN_APNI_GEMINI_API_KEY_PASTE_KAREIN"
+GEMINI_API_KEY = "AQ.Ab8RN6KDa2OSsYJHYEtK69yIyoO8jzOVJkZniSZozVZD4Ocj8A"
 
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
